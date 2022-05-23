@@ -1,13 +1,15 @@
+import React from "react";
 import styled from "styled-components";
 
 const StyledList = styled.div`
 display: flex;
 justify-content: space-between;
-gap: 3em;
+/* gap: 2em; */
 margin-bottom: 3em;
 
 .listTitle{
   color: ${props => props.completed ? "lightgray" : "black"};
+  width: 88%;
 }
 
 input[type="checkbox"] {
@@ -53,14 +55,17 @@ input[type="checkbox"]:checked{
 `;
 
 // List component(single task)
-const ListComp = ({ obj, handleCompletedTask }) => {
-  return (
-    <StyledList completed={obj.isDone}>
-      <div className="listTitle" >{obj.title}</div>
-      <input type="checkbox" onClick={() => handleCompletedTask(obj)} checked={obj.isDone}>
-      </input>
-    </StyledList>
-  )
+class ListComp extends React.Component {
+  render() {
+    const { obj, handleCompletedTask } = this.props;
+    return (
+      <StyledList completed={obj.isDone}>
+        <div className="listTitle" >{obj.title}</div>
+        <input type="checkbox" onClick={() => handleCompletedTask(obj)} checked={obj.isDone}>
+        </input>
+      </StyledList>
+    )
+  }
 }
 
 export default ListComp

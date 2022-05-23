@@ -58,7 +58,7 @@ const TodoHome = () => {
     const initialLoadFunction = () => {
         const savedTodos = localStorage.getItem("todos");
 
-        var isSameDay = function (date, otherDate) {
+        var isSameDay = function (date: Date, otherDate: Date) {
             return date.toDateString() === otherDate.toDateString();
         };
 
@@ -85,6 +85,8 @@ const TodoHome = () => {
 
             const localStoragObj = JSON.parse(savedTodos);
 
+            console.log(localStoragObj);    
+
             const date = new Date(localStoragObj[0].createdAt);
 
             if (isSameDay(date, getCurTimeStamp())) {
@@ -101,11 +103,12 @@ const TodoHome = () => {
     }
 
     // all States, Refs and Effects
-    const [isInputVisible, setInput] = useState();
+    const [isInputVisible, setInput] = useState<boolean>();
     const [todos, setTodos] = useState(initialLoadFunction);
-    const [error, setError] = useState();
-    const inputRef = useRef();
-
+    const [error, setError] = useState<string | null>();
+    const inputRef = useRef<HTMLInputElement>(null);
+    
+    interface todoType { id: number; title: string | undefined; isDone: boolean; createdAt: Date; }
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
@@ -116,11 +119,11 @@ const TodoHome = () => {
     }
 
     // Button to handle keyboard keypress
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> ) : void => {
         if (e.key === 'Enter') {
-            const userInput = inputRef.current.value;
-            if (userInput.length !== 0) {
-                const todo = {
+            const userInput = inputRef?.current?.value;
+            if (userInput?.length !== 0) {
+                const todo:todoType = {
                     id: todos.length + 1, // with a random unique ID
                     title: userInput,
                     isDone: false,
@@ -147,8 +150,8 @@ const TodoHome = () => {
     }
 
     // function to handle if task's state(completed or not. The checkbox)
-    const handleCompletedTask = (obj) => {
-        var foundIndex = todos.findIndex(x => x.id === obj.id);
+    const handleCompletedTask = (obj: { id: string; }) => {
+        var foundIndex = todos.findIndex((x: { id: string; }) => x.id === obj.id);
         let updatedList;
         const existingTodoTask = todos[foundIndex];
 
@@ -167,7 +170,7 @@ const TodoHome = () => {
         <StyledDiv>
             <Header />
             <StyledListDiv>
-                {todos.length !== 0 ? todos.map((obj) => {
+                {todos.length !== 0 ? todos.map((obj: todoType) => {
                     return <ListComp obj={obj} handleCompletedTask={handleCompletedTask} />
                 }) : <div className="styledEmptyList">Empty To Do List</div>}
             </StyledListDiv>
