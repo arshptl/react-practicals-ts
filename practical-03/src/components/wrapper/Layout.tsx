@@ -12,8 +12,12 @@ flex: 1 0 auto;
 }
 `;
 
+type LayoutProps = {
+  children: JSX.Element
+}
+
 // This component wraps whole app
-class layout extends React.Component {
+class layout extends React.Component<LayoutProps> {
   render() {
     return (
       <StyledLayout>{this.props.children}</StyledLayout>

@@ -16,7 +16,6 @@ type InputProps = {
 
 class InputComp extends React.Component<InputProps> {
   render() {
-
     const { handleKeyPress, inputRef } = this.props;
     return (
       <StyledInput type="text" onKeyDown={handleKeyPress} ref={inputRef}
