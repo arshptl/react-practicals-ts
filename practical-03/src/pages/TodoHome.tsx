@@ -6,7 +6,6 @@ import InputComp from "../components/homepage/InputComp";
 import ListComp from "../components/homepage/ListComp";
 import { getCurTimeStamp } from "../static/helpers/helperFunctions";
 import React from "react";
-import { render } from "@testing-library/react";
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -116,13 +115,7 @@ class TodoHome extends React.Component {
     isInputVisible: false,
     todos: [],
     error: null,
-    // inputRef: React.createRef(),
   };
-
-  // constructor(){
-  //     super()
-  //     this.dropdownBoxRef = React.createRef()
-  // }
 
   componentDidMount() {
     this.setState({
@@ -132,7 +125,6 @@ class TodoHome extends React.Component {
   }
 
   componentDidUpdate(prevProps : any) {
-    //Typical usage, don't forget to compare the props
     if (this.state.todos !== prevProps.todos) {
         console.log("Todos changed");
         localStorage.setItem("todos", JSON.stringify(this.state.todos));
@@ -141,22 +133,10 @@ class TodoHome extends React.Component {
 
   render() {
     const { isInputVisible, todos, error } = this.state;
-
-    // all States, Refs and Effects
-    // const [isInputVisible, setInput] = useState<boolean>();
-    // const [todos, setTodos] = useState(initialLoadFunction);
-    // const [error, setError] = useState<string | null>();
-    // const inputRef = useRef<HTMLInputElement>(null);
-
     const inputRef = React.createRef<HTMLInputElement>();
-
-    // useEffect(() => {
-    //     localStorage.setItem("todos", JSON.stringify(todos));
-    // }, [todos]);
 
     // Function to handle button click
     const handleClick = () => {
-      // setInput(!isInputVisible);
       this.setState({
         ...this.state,
         isInputVisible: !isInputVisible,
@@ -181,18 +161,11 @@ class TodoHome extends React.Component {
             isInputVisible: !isInputVisible,
             error: error && null,
           });
-
-          // setTodos([...todos, todo]);
-          // setInput(!isInputVisible);
-          // error && setError(null);
         } else {
           this.setState({
             ...this.state,
             error: "Please enter a valid todo",
           });
-          // setError(
-          //     "Please Enter the valid Todo"
-          // );
           return;
         }
       } else if (e.key === "Escape") {
@@ -201,8 +174,6 @@ class TodoHome extends React.Component {
           isInputVisible: !isInputVisible,
           error: error && null,
         });
-        // setInput(!isInputVisible);
-        // error && setError(null);
       } else {
         return;
       }
@@ -225,9 +196,7 @@ class TodoHome extends React.Component {
       this.setState({
         ...this.state,
         todos: updatedList,
-        //   todos: [...todos, todo],
       });
-      //   setTodos(updatedList);
     };
 
     return (
