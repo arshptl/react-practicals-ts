@@ -1,0 +1,77 @@
+.inputField{
+    padding: 1em;
+    width: 90%;
+    margin-bottom: 0.3em;
+    background-color: #FAEBD8;
+    border-radius: 0.5em;
+    border: 0.1em solid #ffe0b8;
+}
+
+@media (min-width: 37.5em){
+    .inputField{
+    width: 80%;
+    }
+}
+
+.formDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.buttonDiv{
+    width: 100%;
+    display: flex;
+    gap: 1em;
+}
+
+.btn{
+    margin-top: 1em;
+    padding: 0.8em 1em;
+    cursor: pointer;
+    max-width: 6em;
+    color: white;
+    border: 0;
+    border-radius: 0.3em;
+}
+
+.submit{
+    background-color: #0073e6;
+}
+
+.reset{
+    background-color: #ff1a1a;
+}
+
+label{
+    color: gray;
+    width: 100%;
+    margin-top: 0.7em;
+    margin-bottom: 0.3em; 
+}
+
+.imageWrapper{
+    width: 90%;
+    margin: 0.8em 0;
+    text-align: center;
+}
+
+.imageWrapper button{
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    font-size: 1em;
+    margin-bottom: 0.3em;
+}
+
+.photoName{
+    font-size: 0.8em;
+    color: gray;
+}
+
+.errorMsg{
+    margin-top: 0.1em;
+    margin-bottom: 0.8em;
+    color: lightcoral;
+}
