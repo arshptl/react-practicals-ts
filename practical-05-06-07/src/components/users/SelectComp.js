@@ -33,19 +33,22 @@ select option {
 
 `;
 
-const SelectComp = React.memo(({ title, role }) => {
-  return (
-    <StyledStatus>
-      <select>
-        {role.length > 0
-          && role.map((item, i) => {
-            return (
-              <option selected={item.role === title} key={i} value={item.id}>{item.role}</option>
-            )
-          })}
-      </select>
-    </StyledStatus>
-  )
-});
+class SelectComp extends React.Component {
+  render() {
+    const { title, role } = this.props;
+    return (
+      <StyledStatus>
+        <select>
+          {role.length > 0
+            && role.map((item, i) => {
+              return (
+                <option selected={item.role === title} key={i} value={item.id}>{item.role}</option>
+              )
+            })}
+        </select>
+      </StyledStatus>
+    )
+  }
+};
 
 export default SelectComp

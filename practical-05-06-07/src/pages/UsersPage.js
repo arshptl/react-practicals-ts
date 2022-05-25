@@ -59,73 +59,83 @@ const StyledButton = styled.button`
   }
 `;
 
-const getUserData = async (
-  apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST,
-  id = 1
-) => {
-  const res = await fetch(apiLink);
-  const json = await res.json();
-  console.log(json);
-  //   setUsers(json.data);
-  //   setActive(id);
-  await this.setState(() => {
-    // ...this.state,
-    // users: json.data,
-    // active: id,
-    return {
-      users: json.data,
-      active: id,
-    };
-  });
-  return json.data;
-};
 class UsersPage extends React.Component {
-  state = {
-    showPopup: false,
-    selectedUser: {},
-    users: [],
-    active: 1,
+  constructor() {
+    super();
+    this.state = {
+      showPopup: false,
+      selectedUser: {},
+      users: [],
+      active: 1,
+    };
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.showPopupHandler = this.showPopupHandler.bind(this);
+    this.closePopup = this.closePopup.bind(this);
+  }
+
+  async getUserData(
+    apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST,
+    id = 1
+  ) {
+    const res = await fetch(apiLink);
+    const json = await res.json();
+    return { userData: json.data, id: id };
   };
 
-  componentDidMount() {
-    getUserData();
+
+  async componentDidMount() {
+    const { userData, id } = await this.getUserData();
+    console.log(userData);
+    console.log(id);
+    this.setState({ users: userData, active: id });
   }
+
+  async componentDidUpdate(prevState) {
+    if (this.state.users !== prevState.users) {
+      console.log("Todos changed");
+    }
+  }
+
+  async getUserDataNew(apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST, id = 1) {
+    const res = await fetch(apiLink);
+    const json = await res.json();
+    console.log("In new getuserData", json.data);
+    const data = json.data;
+    console.log("in new button click", this)
+    this.setState({
+      users: data, active: id
+    });
+  }
+
+  async handleButtonClick(apiLink, id) {
+    this.getUserDataNew(apiLink, id);
+  };
+
+  closePopup() {
+    console.log("in close popup");
+    this.setState({
+      ...this.state,
+      showPopup: false,
+    });
+  }
+
+  showPopupHandler(item) {
+    this.setState({
+      ...this.state,
+      showPopup: true,
+      selectedUser: item,
+    });
+  }
+
   render() {
-    // const [showPopup, setShowPopup] = useState(false);
-    // const [selectedUser, setSelectedUser] = useState();
-    // const [users, setUsers] = useState([]);
-    // const [active, setActive] = useState(1);
     const { showPopup, selectedUser, users, active } = this.state;
     const apis = [
       { link: process.env.REACT_APP_API_ENDPOINT_FIRST, id: 1 },
       { link: process.env.REACT_APP_API_ENDPOINT_SECOND, id: 2 },
     ];
 
-    // useEffect(() => {
-    //   getUserData();
-    // }, []);
+    console.log(this.state);
 
-    const closePopup = () => {
-      // setShowPopup(false);
-      this.setState({
-        ...this.state,
-        showPopup: false,
-      });
-    };
-
-    const showPopupHandler = (item) => {
-      //   setShowPopup(true);
-      //     setSelectedUser(item);
-      this.setState({
-        ...this.state,
-        setShowPopup: true,
-        setSelectedUser: item,
-      });
-    };
-
-    const handleButtonClick = (apiLink, id) => {
-      getUserData(apiLink, id);
-    };
     return (
       <StyledDiv>
         {users.length === null ? (
@@ -137,8 +147,8 @@ class UsersPage extends React.Component {
               return (
                 <UserList
                   userData={obj}
-                  showPopupHandler={showPopupHandler}
-                  closePopup={closePopup}
+                  showPopupHandler={this.showPopupHandler}
+                  closePopup={this.closePopup}
                   key={obj.id}
                 />
               );
@@ -149,7 +159,7 @@ class UsersPage extends React.Component {
                 className="StyledButtons"
                 active={active}
                 buttonId={1}
-                onClick={() => handleButtonClick(apis[0].link, 1)}
+                onClick={() => this.handleButtonClick(apis[0].link, 1)}
               >
                 1
               </StyledButton>
@@ -157,7 +167,7 @@ class UsersPage extends React.Component {
                 className="StyledButtons"
                 active={active}
                 buttonId={2}
-                onClick={() => handleButtonClick(apis[1].link, 2)}
+                onClick={() => this.handleButtonClick(apis[1].link, 2)}
               >
                 2
               </StyledButton>

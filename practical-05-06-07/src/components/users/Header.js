@@ -59,22 +59,24 @@ padding: 0.4em 0;
 }
 `;
 
-const Header = () => {
-    return (
-        <>
-        <StyledHeader>
-            <div className='styledName'>Name</div>
-            <div className='styledOthers'>      
-            <div>Status</div>
-                    <div>Access</div>
-                    <div></div>
-            </div>
-        </StyledHeader>
-            <StyledHeaderMobile>
-                Users List
-            </StyledHeaderMobile>    
-        </>
-    )
+class Header extends React.Component {
+    render() {
+        return (
+            <>
+                <StyledHeader>
+                    <div className='styledName'>Name</div>
+                    <div className='styledOthers'>
+                        <div>Status</div>
+                        <div>Access</div>
+                        <div></div>
+                    </div>
+                </StyledHeader>
+                <StyledHeaderMobile>
+                    Users List
+                </StyledHeaderMobile>
+            </>
+        )
+    }
 }
 
 export default React.memo(Header)

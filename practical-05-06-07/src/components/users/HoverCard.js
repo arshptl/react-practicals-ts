@@ -138,40 +138,43 @@ const StyledProgress = styled.div`
 }
 
 `;
-
-const HoverCard = ({ selectedUser }) => {
-    return (
-        <StyledInfoDiv>
-            <div className='styledImage'>
-                <img
-                    src={selectedUser.avatar}
-                    alt={selectedUser.username} />
-            </div>
-            <div className='username'>{getFullName(selectedUser.first_name + selectedUser.last_name)} </div>
-            <div className='email'>{selectedUser.email}</div>
-            <div className='plan'>Your Plan: Standard</div>
-            <button className='button'>Active User</button>
-            <StyledProgress>
-                <div className='progressHeading'>Plan uses</div>
-                <div className="progress2 progress-moved">
-                    <div className="progress-bar2" >
+// = ({ selectedUser }) =>
+class HoverCard extends React.Component {
+    render() {
+        const { selectedUser } = this.props;
+        return (
+            <StyledInfoDiv>
+                <div className='styledImage'>
+                    <img
+                        src={selectedUser.avatar}
+                        alt={selectedUser.username} />
+                </div>
+                <div className='username'>{getFullName(selectedUser.first_name + selectedUser.last_name)} </div>
+                <div className='email'>{selectedUser.email}</div>
+                <div className='plan'>Your Plan: Standard</div>
+                <button className='button'>Active User</button>
+                <StyledProgress>
+                    <div className='progressHeading'>Plan uses</div>
+                    <div className="progress2 progress-moved">
+                        <div className="progress-bar2" >
+                        </div>
                     </div>
-                </div>
-            </StyledProgress>
-            <StyledStats>
-                <div>
-                    <div className='statsNum'>4567</div>
-                    <div className='statsTitle'>Clicks reviewed</div>
-                </div>
-                <div className='dividerLine'></div>
-                <div>
-                    <div className='statsNum'>3456</div>
-                    <div className='statsTitle'>Monthly clicks</div>
-                </div>
-            </StyledStats>
+                </StyledProgress>
+                <StyledStats>
+                    <div>
+                        <div className='statsNum'>4567</div>
+                        <div className='statsTitle'>Clicks reviewed</div>
+                    </div>
+                    <div className='dividerLine'></div>
+                    <div>
+                        <div className='statsNum'>3456</div>
+                        <div className='statsTitle'>Monthly clicks</div>
+                    </div>
+                </StyledStats>
 
-        </StyledInfoDiv>
-    )
+            </StyledInfoDiv>
+        )
+    }
 };
 
 export default HoverCard

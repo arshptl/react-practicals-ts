@@ -114,36 +114,39 @@ const status = [
     },
 ];
 
-const UserList = ({ userData, showPopupHandler, closePopup }) => {
-    return (
-        <StyledOuterDiv onMouseEnter={() => {
-            showPopupHandler(userData)
-        }}
-            onMouseLeave={() => {
-                closePopup()
-            }
+class UserList extends React.Component {
+    render() {
+        const { userData, showPopupHandler, closePopup } = this.props;
+        return (
+            <StyledOuterDiv onMouseEnter={() => {
+                showPopupHandler(userData)
+            }}
+                onMouseLeave={() => {
+                    closePopup()
+                }
 
-            }>
-            <StyledUserProfile>
-                <div className='styledImage'>
-                    <LazyLoad height={250} once>
-                        <img
-                            src={userData.avatar}
-                            alt={userData.username} />
-                    </LazyLoad>
-                </div>
-                <div>
-                    <div>{getFullName(userData.first_name, userData.last_name)}</div>
-                    <div className='styledEmail'>{userData.email}</div>
-                </div>
-            </StyledUserProfile>
-            <StyledSelectDiv>
-                <SelectComp title={userData.status} role={status} />
-                <SelectComp title={userData.access} role={roles} />
-                <RiLock2Line style={{ color: 'gray', fontSize: '25px' }} />
-            </StyledSelectDiv>
-        </StyledOuterDiv>
-    )
+                }>
+                <StyledUserProfile>
+                    <div className='styledImage'>
+                        <LazyLoad height={250} once>
+                            <img
+                                src={userData.avatar}
+                                alt={userData.username} />
+                        </LazyLoad>
+                    </div>
+                    <div>
+                        <div>{getFullName(userData.first_name, userData.last_name)}</div>
+                        <div className='styledEmail'>{userData.email}</div>
+                    </div>
+                </StyledUserProfile>
+                <StyledSelectDiv>
+                    <SelectComp title={userData.status} role={status} />
+                    <SelectComp title={userData.access} role={roles} />
+                    <RiLock2Line style={{ color: 'gray', fontSize: '25px' }} />
+                </StyledSelectDiv>
+            </StyledOuterDiv>
+        )
+    }
 }
 
 export default React.memo(UserList)
