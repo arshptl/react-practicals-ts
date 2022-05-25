@@ -1,9 +1,8 @@
-import { render } from "@testing-library/react";
-import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/users/Header";
 import HoverCard from "../components/users/HoverCard";
 import UserList from "../components/users/UserList";
+import React from "react";
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -46,7 +45,7 @@ const StyledButtonDiv = styled.div`
   gap: 1em;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{active: number, buttonId: number}>`
   padding: 0.6em 0.9em;
   background-color: ${(props) =>
     props.active === props.buttonId ? "#F5B23E" : "#ffeac4"};
@@ -59,13 +58,47 @@ const StyledButton = styled.button`
   }
 `;
 
-class UsersPage extends React.Component {
-  constructor() {
-    super();
+
+interface UserType {
+  id: number,
+  email: string,
+  first_name: string,
+  last_name: string,
+  avatar: string,
+}
+
+interface IProps{
+
+}
+
+interface IState{
+  showPopup: boolean;
+  selectedUser: UserType;
+  users: [UserType];
+  active: number;
+}
+
+class UsersPage extends React.Component<IProps, IState> {
+  constructor(props: any) {
+    super(props);
     this.state = {
       showPopup: false,
-      selectedUser: {},
-      users: [],
+      selectedUser: {
+        id: 0,
+        email: "",
+        first_name: "",
+        last_name: "",
+        avatar: "",
+      },
+      users: [
+        {
+          id: 0,
+          email: "",
+          first_name: "",
+          last_name: "",
+          avatar: "",
+        }
+      ],
       active: 1,
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -74,7 +107,7 @@ class UsersPage extends React.Component {
   }
 
   async getUserData(
-    apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST,
+    apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST as string,
     id = 1
   ) {
     const res = await fetch(apiLink);
@@ -90,13 +123,13 @@ class UsersPage extends React.Component {
     this.setState({ users: userData, active: id });
   }
 
-  async componentDidUpdate(prevState) {
+  async componentDidUpdate(prevState: IState) {
     if (this.state.users !== prevState.users) {
       console.log("Todos changed");
     }
   }
 
-  async getUserDataNew(apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST, id = 1) {
+  async getUserDataNew(apiLink = process.env.REACT_APP_API_ENDPOINT_FIRST as string, id : number = 1) {
     const res = await fetch(apiLink);
     const json = await res.json();
     console.log("In new getuserData", json.data);
@@ -107,7 +140,7 @@ class UsersPage extends React.Component {
     });
   }
 
-  async handleButtonClick(apiLink, id) {
+  async handleButtonClick(apiLink: string | undefined, id: number) {
     this.getUserDataNew(apiLink, id);
   };
 
@@ -119,7 +152,7 @@ class UsersPage extends React.Component {
     });
   }
 
-  showPopupHandler(item) {
+  showPopupHandler(item : UserType) {
     this.setState({
       ...this.state,
       showPopup: true,

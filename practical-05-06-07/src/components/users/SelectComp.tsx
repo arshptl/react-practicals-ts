@@ -33,7 +33,15 @@ select option {
 
 `;
 
-class SelectComp extends React.Component {
+type PropsType = {
+  title: string,
+  role: Array<{
+    id: string,
+    role: string
+  }>
+}
+
+class SelectComp extends React.Component<PropsType> {
   render() {
     const { title, role } = this.props;
     return (
