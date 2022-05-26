@@ -12,17 +12,19 @@ const StyledNotFoundDiv = styled.div`
 `;
 
 // 404 page for invalid path/url
-const PageNotFound = () => {
-  return (
-    <StyledNotFoundDiv>
-      <div className='titleText'>
-        404
-      </div>
-      <div className='desc'>
-        Page not found
-      </div>
-    </StyledNotFoundDiv>
-  )
+class PageNotFound extends React.Component {
+  render() {
+    return (
+      <StyledNotFoundDiv>
+        <div className='titleText'>
+          404
+        </div>
+        <div className='desc'>
+          Page not found
+        </div>
+      </StyledNotFoundDiv>
+    )
+  }
 }
 
 export default PageNotFound

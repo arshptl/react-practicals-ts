@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import styled from "styled-components";
 import { authActions } from '../store/slices/authSlice';
 
@@ -171,50 +171,59 @@ margin-bottom: 1em;
 
 // This page will be rendered after user signed up successfully
 // Will display the user information
-const Home = () => {
-  const userData = useSelector(state => state.auth.userData);
-  const dispatch = useDispatch();
-  console.log(userData);
+class Home extends React.Component {
 
-  const handleLogout = () => {
-    dispatch(
+  render() {
+    const { userData } = this.props;
+
+    return (
+      <>
+        <StyledSnackBar>
+          <div>
+            Hello <span>{userData.name}</span>, you are registered with the email id - <span>{userData.email}</span> and phone number - <span>{userData.phoneNo}</span>
+          </div>
+          <button onClick={this.props.handleLogout}>
+            Logout
+          </button>
+        </StyledSnackBar>
+        <StyledProfileDiv>
+
+          <StyledImageDiv>
+            <img alt={userData.name} src={userData.avatar} />
+            <div className='styledName'>{userData.name}</div>
+            <button className='btn' onClick={this.props.handleLogout}>Logout</button>
+          </StyledImageDiv>
+
+          <StyledUserInfo>
+            <Styledtitle>Phone Number</Styledtitle>
+            <StyledValue>{userData.phoneNo}</StyledValue>
+
+            <Styledtitle>Email</Styledtitle>
+            <StyledValue>{userData.email}</StyledValue>
+
+            <Styledtitle>Password</Styledtitle>
+            <StyledValue>{userData.password}</StyledValue>
+
+          </StyledUserInfo>
+
+        </StyledProfileDiv>
+      </>
+    )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    userData: state.auth.userData
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleLogout: () => dispatch(
       authActions.logout()
     )
   }
-
-  return (
-    <>
-      <StyledSnackBar>
-        <div>
-          Hello <span>{userData.name}</span>, you are registered with the email id - <span>{userData.email}</span> and phone number - <span>{userData.phoneNo}</span>
-        </div>
-        <button onClick={handleLogout}>
-          Logout
-        </button>
-      </StyledSnackBar>
-      <StyledProfileDiv>
-
-        <StyledImageDiv>
-          <img alt={userData.name} src={userData.avatar} />
-          <div className='styledName'>{userData.name}</div>
-          <button className='btn' onClick={handleLogout}>Logout</button>
-        </StyledImageDiv>
-
-        <StyledUserInfo>
-          <Styledtitle>Phone Number</Styledtitle>
-          <StyledValue>{userData.phoneNo}</StyledValue>
-
-          <Styledtitle>Email</Styledtitle>
-          <StyledValue>{userData.email}</StyledValue>
-
-          <Styledtitle>Password</Styledtitle>
-          <StyledValue>{userData.password}</StyledValue>
-
-        </StyledUserInfo>
-
-      </StyledProfileDiv>
-    </>
-  )
 }
 
-export default Home
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

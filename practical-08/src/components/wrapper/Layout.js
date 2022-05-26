@@ -13,10 +13,12 @@ flex: 1 0 auto;
 `;
 
 // This component wraps the whole app
-const Layout = (props) => {
-  return (
-    <StyledLayout>{props.children}</StyledLayout>
-  )
+class Layout extends React.Component{
+  render() {
+    return (
+      <StyledLayout>{this.props.children}</StyledLayout>
+    )
+  }
 }
 
 export default Layout

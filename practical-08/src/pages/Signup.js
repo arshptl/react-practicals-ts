@@ -22,7 +22,6 @@ margin: 0 auto;
     h1{
         font-size: 3em;
     }
-
 }
 `;
 
@@ -48,16 +47,18 @@ flex-direction: column-reverse;
 `;
 
 // Displays this page when user hasn't been Signed up
-const Signup = () => {
-    return (
-        <StyledSignup>
-            <h1>SignUp</h1>
-            <StyledContentdiv>
-                <FormComp />
-                <img alt="landingPageImage" src={landingImage} />
-            </StyledContentdiv>
-        </StyledSignup>
-    )
+class Signup extends React.Component {
+    render() {
+        return (
+            <StyledSignup>
+                <h1>SignUp</h1>
+                <StyledContentdiv>
+                    <FormComp />
+                    <img alt="landingPageImage" src={landingImage} />
+                </StyledContentdiv>
+            </StyledSignup>
+        )
+    }
 }
 
 export default Signup
